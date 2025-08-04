@@ -1,0 +1,978 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+    - hello!
+    - halo
+    - Bonjour
+    - i need help
+    - i need assistance
+
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: affirm
+  examples: |
+    - yes
+    - yeah
+    - yup
+    - sure
+    - absolutely
+    - of course
+    - definitely
+    - I do
+    - I agree
+    - sounds good
+    - that’s right
+    - correct
+    - exactly
+    - that works
+    - I’m in
+    - go ahead
+    - proceed
+    - why not
+    - for sure
+    - I would like that
+    - continue
+
+- intent: deny
+  examples: |
+    - no
+    - nope
+    - not at all
+    - no thanks
+    - I don’t want to
+    - I’m good
+    - I’m done
+    - no thank you
+    - that’s all
+    - nothing else
+    - I'm fine
+    - I don’t need anything else
+    - I’d rather not
+    - I don’t think so
+    - I’m not interested
+    - nah
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - is this a real person?
+    - are you real?
+    - are you an AI?
+    - are you automated?
+    - are you a chatbot?
+    - you're not a person, are you?
+    - are you a real human being?
+    - are you an assistant or a person?
+    - who am I chatting with?
+    - are you alive?
+    - are you just a program?
+- intent: thank_you
+  examples: |
+    - thanks
+    - thank you
+    - thx
+    - much appreciated
+    - appreciate it
+    - cheers
+    - thank you so much
+    - thanks a lot
+    - many thanks
+    - really appreciate it
+    - thank you very much
+    - I appreciate that
+    - thanks for the help
+    - thank you kindly
+    - big thanks
+    - thank you for your assistance
+    - I truly appreciate it
+    - you're the best, thanks
+    - thanks again
+    - many thanks to you
+
+- intent: ask_how_bot_is
+  examples: |
+    - how are you?
+    - how are you doing?
+    - are you okay?
+    - how's it going?
+    - what's up?
+    - how do you do?
+    - hope you're well
+    - how are things?
+    - are you doing alright?
+    - how is everything?
+    - are you fine?
+    - are you doing okay?
+    - hope you're doing good
+    - what’s going on?
+    - how’s your day?
+    - are you good?
+    - how are you today?
+    - is everything fine with you?
+    - how are you feeling?
+    - you doing okay?
+
+- intent: unhappy_with_response
+  examples: |
+    - this is not helpful
+    - that didn't help
+    - I'm not happy with this
+    - that's not what I meant
+    - you're not helping
+    - useless
+    - this is wrong
+    - no, that's not it
+    - that’s not the answer I wanted
+    - I don't like this response
+    - you got it wrong
+    - not what I was looking for
+    - you're not being useful
+    - that's incorrect
+    - doesn't make sense
+    - this is frustrating
+    - that’s not correct
+    - you misunderstood me
+    - that’s disappointing
+    - that’s not what I asked for
+- intent: add_to_cart
+  examples: |
+    - Add [1](quantity) [iPad Pro 11 case](product_name)
+    - Add [2](quantity) [Apple iPhone 14 Pro](product_name) to my cart
+    - Add [2](quantity) [headphones](product_name) to my cart
+    - Add [4](quantity) [ring light stand](product_name)
+    - Add [1](quantity) [stylus](product_name) please
+    - Add [6](quantity) [gaming monitor stand](product_name)
+    - Add [five](quantity) [charging cable](product_name) for me
+    - Add [two](quantity) [desk mat](product_name) to my cart
+    - Add [7](quantity) [Samsung Galaxy Tab](product_name) to the basket
+    - Add [four](quantity) [portable power bank](product_name) to my cart now
+    - Add [3](quantity) [Samsung S21 phone](product_name) in my cart
+    - Add [six](quantity) [Bluetooth speaker](product_name)?
+    - Add [four](quantity) [iPhone charging cable](product_name) into the basket
+    - Add [two](quantity) [keyboard dust cover](product_name) in my cart
+    - Add [seven](quantity) [adjustable phone holder](product_name)
+    - Add [nine](quantity) [external hard drive](product_name)
+    - Add [six](quantity) [ultrawide monitor stand](product_name)
+    - Add [1](quantity) [USB cable pack](product_name)
+    - Add [ten](quantity) [webcam mount](product_name)
+    - Add [3](quantity) [laptop backpack case](product_name)
+    - Add [three](quantity) [fitness tracker band](product_name)
+    - Add [four](quantity) [USB hub 3.0](product_name)
+    - Add [two](quantity) [camera lens kit](product_name)
+    - Add [three](quantity) [gaming curved monitor](product_name) in my basket
+    - Add [four](quantity) [gaming keyboard](product_name) to my cart
+    - Add [wireless headphones](product_name)
+    - Add one [LED light bulb](product_name)
+    - Can I add [gaming chair](product_name) to my cart?
+    - Can I get [6](quantity) [magnetic charging dock](product_name)?
+    - Can you add [one](quantity) [Oculus Quest 2](product_name)?
+    - Can you add [three](quantity) [tablet stand](product_name) to my basket
+    - Can you please insert [two](quantity) [RGB gaming mousepad](product_name)?
+    - Get me [8](quantity) [laptop cooling pad](product_name)
+    - Get me a [podcast microphone](product_name)
+    - Help me add [nine](quantity) [USB flash drive](product_name)
+    - I need [4](quantity) [dual-band router](product_name) in my cart
+    - I want [smartwatch](product_name) in my basket
+    - I’d like to add [seven](quantity) [USB cable pack](product_name)
+    - I’d like to get [nine](quantity) [USB extension cable](product_name)
+    - I’d like to put [ten](quantity) [noise cancelling headphone set](product_name)
+    - I’d like to add [VR headset](product_name)
+    - I'd like [gaming mouse](product_name) added to my basket
+    - I'd like to add [one](quantity) [smart watch](product_name)
+    - Include [6](quantity) [keyboard dust cover](product_name) in my cart
+    - Insert [4](quantity) [laptop sleeve bag](product_name) for me
+    - Insert [eight](quantity) [tablet cover](product_name) into my cart
+    - Insert [HD webcam](product_name) into my basket please
+    - Just add [4](quantity) [Bluetooth sound bar](product_name)
+    - Kindly insert [two](quantity) [gaming curved monitor](product_name) in my basket
+    - Kindly put [9](quantity) [HDMI cable pack](product_name) in my cart
+    - Order [1](quantity) [LED ring light](product_name) for me
+    - Please add [drawing tablet](product_name)
+    - Please add a [power bank](product_name)
+    - Please add [five](quantity) [Samsung Galaxy Tab](product_name) to the basket
+    - Please add [three](quantity) [USB hub](product_name) to my basket
+    - Please help me add [eight](quantity) [webcam privacy cover](product_name)
+    - Please include [3](quantity) [mechanical keyboard](product_name)
+    - Please insert [eight](quantity) [LED strip light kit](product_name)
+    - Please move [3](quantity) [car phone mount](product_name) to the cart
+    - Please toss in [2](quantity) [gaming monitor stand](product_name)
+    - Put [1](quantity) [monitor riser stand](product_name) into my cart
+    - Put [3](quantity) [Bluetooth noise-canceling headset](product_name) in my cart
+    - Put [4](quantity) [wireless gaming mouse](product_name) in my cart
+    - Put [Bluetooth speaker dock](product_name) into the cart
+    - Put [gaming mouse](product_name) into the cart
+    - Put [headphones](product_name) into the cart
+    - Put [USB-C external SSD drive](product_name) into the cart
+    - Put [wireless gaming keyboard set](product_name) into the cart
+    - Toss in the [Bluetooth speaker dock](product_name)
+    - Toss in the [gaming mouse](product_name)
+    - Toss in the [microphone](product_name)
+    - Toss in the [USB-C external SSD drive](product_name)
+    - Toss in the [wireless gaming keyboard set](product_name)
+    - Can you add [safes]((product_name) to my shopping cart?
+    - Can you add [external hardrive]((product_name) to my shopping cart?
+    
+
+- intent: check_stock
+  examples: |
+    - do you have [laptops](product_name) in stock?
+    - are there any [smartphones](product_name) available?
+    - can I get a [gaming mouse](product_name) right now?
+    - is the [bluetooth speaker](product_name) in stock?
+    - check availability of [wireless earbuds](product_name)
+    - do you stock [mechanical keyboards](product_name)?
+    - I want to buy [external hard drives](product_name)
+    - any [USB flash drives](product_name) left?
+    - do you have [wireless gaming mouse](product_name) available?
+    - is the [4K smart TV](product_name) still in stock?
+    - looking for [portable phone chargers](product_name)
+    - do you carry [noise cancelling headphones](product_name)?
+    - are [smartwatches](product_name) on sale?
+    - do you sell [multi-device bluetooth keyboard](product_name)?
+    - do you have [LED desk lamp](product_name) available?
+    - is the [wireless charger pad](product_name) in stock?
+    - can I get a [gaming headset](product_name) now?
+    - do you have [gaming consoles](product_name) in stock?
+    - check if you have [smart home hubs](product_name)
+    - do you have [tablet pro 12.9](product_name) in stock?
+    - are there any [digital cameras](product_name) available?
+    - I want to buy [portable Bluetooth speaker](product_name)
+    - do you stock [4-port HDMI switch](product_name)?
+    - can you check for [mechanical gaming keyboard](product_name)?
+    - is the [gaming mouse pro](product_name) available?
+    - do you have [wireless presenter](product_name) in stock?
+    - are [USB C cables](product_name) available?
+    - can I get a [digital drawing tablet](product_name)?
+    - do you carry [ergonomic office chair](product_name)?
+    - any [external SSD drives](product_name) left?
+    - do you have [gaming desktop i7](product_name) available?
+    - is the [smart baby monitor](product_name) in stock?
+    - check availability of [portable hard drives](product_name)
+    - do you stock [Bluetooth neckband](product_name)?
+    - I want to buy [rechargeable desk lamp](product_name)
+    - do you have [VR headset elite](product_name) available?
+    - are there any [HD USB webcams](product_name) in stock?
+    - do you sell [wireless subwoofer set](product_name)?
+    - do you have [foldable electric scooter](product_name)?
+    - is the [4K streaming webcam](product_name) still available?
+    - check if you have [Amazon Echo Show](product_name)
+    - can I get a [mesh WiFi router kit](product_name)?
+    - do you have [gaming mouse pad](product_name) in stock?
+    - are [wireless gaming controllers](product_name) available?
+    - do you sell [USB car charger dual port](product_name)?
+    - is the [DJI drone mini 3](product_name) available?
+    - do you carry [27-inch PC monitor](product_name)?
+    - do you have [LED desk lamp with USB](product_name)?
+    - are there any [wireless charging pads](product_name) left?
+    - can I get a [playbox console](product_name)?
+    - is anything in stock?
+    - show me everything in stock
+    - show me what you have in stock
+    - what products do you have in stock
+     
+
+- intent: find_product_price
+  examples: |
+    - how much is [motherboard](product_name)?
+    - how much is [gaming mouse](product_name)?
+    - how much is a [bluetooth speaker](product_name)
+    - how much is a [smart home device](product_name)?
+    - how much is an [apple iphone 14](product_name)?
+    - how much is [router](product_name)
+    - what's the price of [keyboard](product_name)?
+    - what's the price of [office chair](product_name)
+    - what's the price of a [laser printer](product_name)?
+    - what's the price of an [external SSD drive](product_name)
+    - what is the price of [motherboard](product_name)?
+    - what is the price of [office chair](product_name)
+    - what is the price of a [laser printer](product_name)?
+    - what is the price of an [external SSD drive](product_name)
+    - product [monitor](product_name) price
+    - product [samsung tablet](product_name) price?
+    - how much does [webcam](product_name) cost
+    - how much does [acer gaming laptop](product_name) cost?
+    - how much would an [hp desktop PC](product_name) cost?
+    - price for [headphones](product_name)
+    - price for [wireless earbuds](product_name)?
+    - price for a [USB-C cable](product_name)
+    - price for an [android smart TV](product_name)?
+    - what’s the cost of [camera](product_name)
+    - what’s the cost of [dslr camera](product_name)?
+    - what’s the cost of a [portable hard disk](product_name)?
+    - what’s the cost of an [hd video recorder](product_name)?
+    - tell me the price of [power bank](product_name)
+    - tell me the price of [mechanical keyboard](product_name)?
+    - tell me the price of an [LED monitor](product_name)
+    - tell me the price of a [4K curved screen](product_name)
+    - how expensive is [tablet](product_name)?
+    - how expensive is [wireless router](product_name)?
+    - how pricey is a [laser printer](product_name)?
+    - how pricey is a [dual monitor stand](product_name)?
+    - can you give me the price for [mouse](product_name)?
+    - can you give me the price for [noise-cancelling headphones](product_name)?
+    - what's the cost for [tripod](product_name)
+    - what's the cost for [gaming chair](product_name)?
+    - how much for [keyboard](product_name)
+    - how much for [high-end gaming keyboard](product_name)?
+    - is [monitor](product_name) expensive?
+    - is [monitor 27 inch](product_name) expensive?
+    - do you know the price of [router](product_name)?
+    - do you know the price of [5G Wi-Fi router](product_name)?
+    - price of [SSD](product_name)
+    - price of [graphics card RTX](product_name)?
+    - how much is one [USB hub](product_name)?
+    - how much is one [logitech wireless mouse](product_name)?
+    - please tell me how much a [laptop](product_name) is
+    - please tell me how much a [macbook air](product_name) is?
+    - I want to know the price of [external hard drive](product_name)
+    - I want to know the price of [apple mac mini](product_name)?
+    - give me the cost of an [HDMI cable](product_name)
+    - give me the cost of an [8-port ethernet switch](product_name)?
+    - I'd like to know how much [tablet stand](product_name) costs
+    - I'd like to know how much [USB-C multiport adapter](product_name) costs?
+    - how much should I pay for [earbuds](product_name)
+    - how much should I pay for [bluetooth earbuds](product_name)?
+    - what's the asking price of [flash drive](product_name)?
+    - what's the asking price of [sandisk USB drive](product_name)?
+    - how much can I get a [keyboard](product_name) for
+    - how much can I get a [samsung curved monitor](product_name) for?
+    - what's [usb hub](product_name)'s price?
+    - what's [anker charging dock](product_name)'s price?
+    - cost of [macbook](product_name)
+    - cost of [macbook pro 16 inch](product_name)?
+    - let me know how much [tablet](product_name) costs
+    - let me know how much [samsung note pad](product_name) costs?
+    - what's the current price of [laptop](product_name)?
+    - what's the current price of [lenovo ideapad slim](product_name)?
+    - do you have price info on [headset](product_name)?
+    - do you have price info on [gaming headset pro](product_name)?
+    - is there a price for [ring light](product_name)?
+    - is there a price for [portable selfie ring light](product_name)?
+    - how much will [camera](product_name) set me back?
+    - how much will [sony mirrorless camera](product_name) set me back?
+    - I need the price of [ethernet cable](product_name)
+    - I need the price of [CAT6 patch cable 2m](product_name)?
+    - find price for [tablet stand](product_name)
+    - find price for [metal laptop riser stand](product_name)?
+    - could you tell me what [smart bulb](product_name) costs?
+    - could you tell me what [philips hue light bulb](product_name) costs?
+    - what should I expect to pay for [wireless charger](product_name)?
+    - what should I expect to pay for [magnetic wireless charging pad](product_name)?
+    - show me the prices of all items
+    - show me the prices of all products
+
+- intent: find_cart_total
+  examples: |
+    - what is my cart total?
+    - show me the total in my cart
+    - how much is my cart worth?
+    - what's the total cost of my cart?
+    - how much have I added to my cart?
+    - total price of my cart?
+    - cart total amount?
+    - can you tell me my cart total?
+    - how much will my cart cost?
+    - show cart total price
+    - can you show me my cart total?
+    - tell me the total price in my cart
+    - what’s the total amount in my cart?
+    - how much is everything in my cart?
+    - how much do I owe for my cart?
+    - give me the total cost of my cart
+    - what is the cost of my cart?
+    - what’s the total in my shopping cart?
+    - show the total amount in my cart
+    - what is the sum of items in my cart?
+    - what's my current cart total
+    - how much does my cart add up to
+    - tell me how much my cart costs
+    - can you tell me the total price of my cart
+    - give me the amount due for my cart
+    - how much have I got in my cart
+    - show me the cart amount
+    - what’s the total price of my shopping cart
+    - how much money is in my cart
+    - cart total please
+    - can you give me the total for my cart
+    - how much is the cart total
+    - show total cost of my cart items
+    - what's the sum total of my cart
+    - total value of my cart please
+    - how much are my cart items worth
+    - can you get my cart total
+    - please show me my cart total
+    - I want to know the total price of my cart
+    - total cost of all items in my cart
+    - what is my cart balance
+    - how much is my shopping cart worth
+    - what's the grand total in my cart
+    - tell me the amount of my cart
+    - how much have I spent in my cart
+    - can I see my cart total
+    - what is the total bill for my cart
+    - give me the total amount in my cart
+
+- intent: add_order
+  examples: |
+    - place my order
+    - I want to order my cart
+    - checkout now
+    - go ahead and place the order
+    - proceed to checkout
+    - complete my purchase
+    - finalize my order
+    - confirm order now
+    - let's complete the checkout
+    - execute my order
+    - please place my order
+    - can you place my order now?
+    - I’d like to place an order
+    - I want to checkout
+    - ready to checkout
+    - submit my order
+    - confirm my purchase
+    - complete checkout
+    - process my order
+    - I’m ready to buy
+    - I want to complete my order
+    - go ahead with my order
+    - finalize checkout
+    - place the order for me
+    - let’s finalize my order
+    - checkout my cart
+    - proceed with order
+    - order my cart items
+    - make the purchase
+    - can I place my order?
+    - start the checkout process
+    - confirm my order now
+    - I want to finalize the purchase
+    - place my shopping order
+    - place my cart order
+    - complete my cart purchase
+    - submit my cart for checkout
+    - execute the order now
+    - I want to pay for my cart
+    - confirm the checkout
+    - finalize the shopping cart
+    - complete the order
+    - start the purchase
+    - go to checkout
+    - ready to place order
+    - submit the purchase
+    - process checkout
+    - make my purchase
+    - begin checkout
+    - I want to finalize buying
+    - confirm the order please
+
+- intent: update_order
+  examples: |
+    - update order [789](order_id)
+    - change my order [123](order_id)
+    - modify order number [456](order_id)
+    - I'd like to update order [321](order_id)
+    - can I alter order [654](order_id)?
+    - adjust order [987](order_id)
+    - edit order [111](order_id)
+    - update order ID [222](order_id)
+    - please update order [333](order_id)
+    - change order [444](order_id)
+
+- intent: delete_order
+  examples: |
+    - cancel order [789](order_id)
+    - delete my order [123](order_id)
+    - remove order [456](order_id)
+    - I want to cancel order [321](order_id)
+    - please cancel order [654](order_id)
+    - delete order number [987](order_id)
+    - remove order ID [111](order_id)
+    - cancel order [222](order_id)
+    - cancel order ID [333](order_id)
+    - delete order [444](order_id)
+
+
+
+- intent: session_start
+  examples: |
+    - start session
+    - begin
+    - let's begin
+    - session start
+    - welcome back
+# —————————————— SHIPPING ——————————————
+- intent: faq/ship_internationally
+  examples: |
+    - Do you ship internationally?
+    - Can you deliver abroad?
+    - Do you ship worldwide?
+    - Is international shipping available?
+    - Can you ship to other countries?
+    - Do you send orders outside the country?
+    - Are overseas deliveries possible?
+    - Can I order if I'm not in the same country?
+    - Do you offer shipping across borders?
+    - Is it possible to get my order internationally?
+
+# —————————————— RETURNS ——————————————
+- intent: faq/return_policy
+  examples: |
+    - Can I return a product?
+    - What is your return policy?
+    - How do I send something back?
+    - Is it possible to return an item?
+    - What if I want to return something?
+    - Do you accept returns?
+    - How can I initiate a return?
+    - Are returns allowed?
+    - Can I get a refund for a returned item?
+    - What’s the process for returning a product?
+
+# —————————————— DELIVERY TIME ——————————————
+- intent: faq/delivery_time
+  examples: |
+    - How long does delivery take?
+    - When will my order arrive?
+    - What is the delivery time?
+    - How soon can I expect my order?
+    - What's the estimated delivery duration?
+    - How many days for delivery?
+    - Is there a delivery timeframe?
+    - When do you usually deliver?
+    - How fast is the shipping?
+    - How long until my package arrives?
+
+# —————————————— HOW TO ORDER ——————————————
+- intent: faq/how_to_order
+  examples: |
+    - How do I place an order?
+    - Can you show me how to order?
+    - What’s the ordering process?
+    - I want to buy something, how?
+    - How can I make a purchase?
+    - Guide me through ordering
+    - How does ordering work?
+    - How do I complete a purchase?
+    - Can I get help placing an order?
+    - Where do I start to buy something?
+
+# —————————————— PAYMENT METHODS ——————————————
+- intent: faq/payment_methods
+  examples: |
+    - What payment methods do you accept?
+    - How can I pay for my order?
+    - Do you accept credit cards?
+    - Can I pay using PayPal?
+    - Is cash on delivery available?
+    - What are the payment options?
+    - Can I use mobile money?
+    - Do you support bank transfers?
+    - Are there any payment restrictions?
+    - Is it safe to pay online?
+
+- intent: faq/account_help
+  examples: |
+    - How do I create an account?
+    - I can't log in
+    - Help me access my account
+    - How do I sign up?
+    - I forgot my password
+    - Can I shop without an account?
+    - Do I need to register to buy?
+    - How do I reset my password?
+    - Is registration free?
+    - Where can I log in?
+
+# —————————————— CONTACT & SUPPORT ——————————————
+- intent: faq/contact_support
+  examples: |
+    - How do I contact support?
+    - I need help with my order
+    - Is there a customer service number?
+    - Can I talk to someone?
+    - How do I reach you?
+    - I want to report a problem
+    - Where can I get help?
+    - How can I get in touch?
+    - Is live chat available?
+    - Who do I contact for issues?
+
+# —————————————— ORDER CHANGES / CANCELLATION ——————————————
+- intent: faq/order_changes
+  examples: |
+    - Can I change my order?
+    - How do I cancel my order?
+    - I made a mistake in my order
+    - Can I edit my order after placing it?
+    - Is it possible to change the delivery address?
+    - I want to update my order
+    - Can I cancel an item from my cart?
+    - What if I change my mind?
+    - How long do I have to modify my order?
+    - Can I remove an item after checkout?
+
+# —————————————— WARRANTY / GUARANTEE ——————————————
+- intent: faq/warranty_info
+  examples: |
+    - How long is the warranty?
+    - What's the warranty policy?
+    - Do you offer a guarantee?
+    - What happens if it breaks?
+    - Is the item under warranty?
+    - Can I claim a warranty?
+    - Do all products come with a guarantee?
+    - Is there product protection?
+    - Can I get a replacement under warranty?
+
+- intent: check_order_status
+  examples: |
+    - what's the status of order [789](order_id)?
+    - check order status for [123](order_id)
+    - order [456](order_id) status?
+    - can you tell me the status of order [321](order_id)?
+    - get status for order [654](order_id)
+    - how is order [987](order_id) doing?
+    - what's the update on order [111](order_id)?
+    - track order [222](order_id)
+    - show status of order [333](order_id)
+    - status of order [444](order_id)?
+    - can you check status for order [555](order_id)?
+    - please tell me the status of order [666](order_id)
+    - I want to know the status of order [777](order_id)
+    - update me on order [888](order_id)
+    - what’s happening with order [999](order_id)?
+    - how is my order [101](order_id) progressing?
+    - track the order [202](order_id)
+    - order [303](order_id) tracking status
+    - what's the current status of order [404](order_id)?
+    - show me order status for [505](order_id)
+    - can you give me an update on order [606](order_id)?
+    - tell me the status of my order [707](order_id)
+    - status update for order [808](order_id)
+    - what’s the status on order [909](order_id)?
+    - how’s order [010](order_id) going?
+    - give me the status of order [111](order_id)
+    - I want an update on order [222](order_id)
+    - track order number [333](order_id)
+    - show me updates for order [444](order_id)
+    - can you check order [555](order_id) status?
+    - please provide status for order [666](order_id)
+    - I want to track order [777](order_id)
+    - update me on order number [888](order_id)
+    - status check for order [999](order_id)
+    - what’s the progress on order [1234](order_id)?
+    - how is my order number [5678](order_id)?
+    - order [91011](order_id) status update
+    - can you track order [1213](order_id)?
+    - tell me about order [1415](order_id)
+    - what’s the current update on order [1617](order_id)?
+    - give me details on order [1819](order_id)
+    - how’s order [2021](order_id) progressing?
+    - I want to know how order [2223](order_id) is doing
+    - show status for order [2425](order_id)
+    - check the status for order [2627](order_id)
+    - what’s the status of my order [2829](order_id)?
+    - can you provide status for order [3031](order_id)?
+    - order [3233](order_id) tracking info
+    - what is the status of order number [789](order_id)?
+    - can you tell me the status of order number [123](order_id)?
+    - check the status of order number [456](order_id)
+    - what's the update on order number [321](order_id)?
+    - track order number [654](order_id)
+    - show status of order number [987](order_id)
+    - status of order number [111](order_id)?
+    - how is order number [222](order_id) doing?
+    - give me the status of order number [333](order_id)
+    - please check the status of order number [444](order_id)
+    - Please check my order status 
+    - What’s the status of my order?
+    - Can you check my order please?
+    - I want to know where my order is.
+    - Has my order been shipped yet?
+    - Is my order on the way?
+    - Could you tell me if my order has been dispatched?
+    - Track my order
+    - Any updates on my delivery?
+
+- intent: share_feedback
+  examples: |
+    - share feedback
+    - I want to share some feedback
+    - I want to share feedback
+    - Here's my feedback
+    - Can I leave a comment?
+    - I have some thoughts to share
+    - I’d like to give my feedback
+    - Feedback for you
+    - I'd like to say something
+    - I have a suggestion
+    - Let me give you my opinion
+    - I want to tell you what I think
+    - Can I tell you how it went?
+    - I want to share my experience
+    - I have something to say about the service
+    - Can I leave a review?
+    - I want to review this
+    - This is what I think
+    - I’d like to report something
+    - I want to tell you my thoughts
+    - I have a few comments
+    - My feedback is ready
+- intent: view_faqs
+  examples: |
+    - Frequently asked questions
+    - Give Frequently asked questions
+- intent: ask_your_question
+  examples: |
+    - I have another question
+    - Can I ask you something else?
+    - I'd like to ask another question
+    - Let me ask something else
+    - I need to ask you something
+    - I want to ask another question
+    - Can I ask another one?
+    - I still have more questions
+    - There's something else I want to know
+    - Here's another question
+    - Mind if I ask one more thing?
+    - I’ve got another query
+    - One more thing I’d like to ask
+    - Could I ask a different question?
+    - I want to continue with another question
+    - I have a follow-up question
+    - Can I continue asking?
+    - I’m not done yet, here’s another question
+    - May I ask a question?
+    - I have a question
+    - I have a query
+    - May I ask something?
+    - I'd like to ask a question
+    - Can I ask a question?
+    - I need to ask a question
+
+- lookup: product_name
+  examples: |
+    - 10000mah power bank
+    - 12-outlet surge bar
+    - 128gb usb 3.1
+    - 1tb external hard drive
+    - 20000mah power bank
+    - 256gb flash drive
+    - 27" pc monitor
+    - 2tb external ssd
+    - 2tb portable hard drive
+    - 300gb hp hardrive
+    - 34" ultrawide monitor
+    - 3d printer ender 3
+    - 3d printers
+    - 4-bay nas storage
+    - 4-port hdmi switch
+    - 4k smart oled tv
+    - 4k streaming webcam
+    - 5.1 home theater
+    - 55-inch smart tv
+    - 5tb portable drive
+    - 6-outlet surge protector
+    - 64gb flashdrive slim
+    - 64gb usb stick
+    - 8-bay nas pro
+    - 8-port network switch
+    - action cameras
+    - air purifiers
+    - amazon echo show
+    - anc earbuds pro
+    - android phone g12
+    - asus laptop
+    - baby monitors
+    - base speakers
+    - bluetooth neckband
+    - bluetooth party speaker
+    - bluetooth speakers
+    - canon digital camera
+    - canon inkjet printer
+    - car chargers
+    - cd/dvd drives
+    - cellphones
+    - desktop computers
+    - digital cameras
+    - digital drawing tablet
+    - digital voice recorder
+    - digital voice recorders
+    - dji drone mini 3
+    - drone 4k gps
+    - drone cameras
+    - dsl modem combo
+    - dual camera baby monitor
+    - e-book readers
+    - e-ink note tablet
+    - electric scooter lite
+    - electric scooters
+    - epson ecotank printer
+    - ergonomic gaming mouse
+    - external cd/dvd drive
+    - external hardrives
+    - fast car charger
+    - fitbit charge 5
+    - fitness trackers
+    - flashdrives
+    - foldable electric scooter
+    - game console x
+    - gaming consoles
+    - gaming desktop i7
+    - gaming mice
+    - gaming mouse pro
+    - garmin fitness watch
+    - gigabit switch 16-port
+    - google nest hub
+    - gopro accessories kit
+    - gopro hero 10
+    - graphic tablets
+    - hd projector mini
+    - hd usb webcam
+    - hdmi audio extractor
+    - hdmi switches
+    - headphones
+    - home theater systems
+    - hp laserjet printer
+    - hp photo printer
+    - imac desktop m3
+    - inkjet printers
+    - jvl headphones
+    - keyboards
+    - kindle e-reader
+    - laptop air slim
+    - laptop pro 14
+    - laptops
+    - laser printers
+    - led desk lamp with usb
+    - led desk lamps
+    - magsafe charger
+    - mechanical keyboard rgb
+    - mesh wifi router kit
+    - microphones
+    - modems
+    - motherboard
+    - nas servers
+    - nest smart thermostat
+    - network switches
+    - noise cancelling headphones
+    - noise-cancelling headphones
+    - olympus voice recorder
+    - outdoor security cam
+    - pc monitors
+    - playbox console
+    - podcast microphone
+    - portable bluetooth speaker
+    - portable hard drives
+    - power banks
+    - presenter with laser
+    - projectors
+    - rechargeable desk lamp
+    - ring smart doorbell
+    - robot vacuum cleaner
+    - robot vacuums
+    - samsung tablet
+    - security cameras
+    - short throw projector
+    - smart air purifier
+    - smart baby monitor
+    - smart doorbells
+    - smart home hubs
+    - smart thermostats
+    - smart tvs
+    - smart vacuum mop
+    - smart wifi thermostat
+    - smartphone max x
+    - smartwatch active
+    - smartwatch s9
+    - smartwatches
+    - sony mirrorless camera
+    - sony noise-cancelling over-ear
+    - surge protectors
+    - tablet air 10
+    - tablet pro 12.9"
+    - tablets
+    - tactile keyboard tkl
+    - tp-link wifi router ax1500
+    - tv remotes
+    - universal smart remote
+    - universal tv remote
+    - usb car charger dual port
+    - usb studio microphone
+    - usbs
+    - vdsl router
+    - vr explorer set
+    - vr headset elite
+    - vr headsets
+    - wacom graphic tablet
+    - webcams
+    - wifi routers
+    - wifi security camera
+    - wireless chargers
+    - wireless charging pad
+    - wireless presenter
+    - wireless presenters
+    - wireless subwoofer set

@@ -1,0 +1,291 @@
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - view_faqs
+  - share_feedback
+  - nlu_fallback
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - add_to_cart
+  - check_stock
+  - find_product_price
+  - find_cart_total
+  - add_order
+  - update_order
+  - delete_order
+  - check_order_status
+  - session_start
+  - faq
+  - ask_your_question
+  - thank_you
+  - ask_how_bot_is
+  - unhappy_with_response
+
+entities:
+  - product_name
+  - quantity
+  - order_id
+  - product_id
+  - usertype
+  - customer_id
+
+slots:
+  product_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: product_name
+  suggested_message:
+    type: text
+    mappings:
+      - type: custom
+
+  quantity:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: quantity
+
+  order_id:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: order_id
+
+  product_id:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: product_id
+
+  customer_id:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: custom
+  suggested_intent:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+  usertype:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: custom
+
+  feedback_text:
+    type: text
+    mappings:
+      - type: from_text
+        conditions:
+          - active_loop: feedback_form
+            requested_slot: feedback_text
+
+forms:
+  feedback_form:
+    required_slots:
+      - feedback_text
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I help you today?"
+    - text: "Hi there! What can I do for you?"
+    - text: "Hey! How may I assist you right now?"
+    - text: "Greetings! Need help with something?"
+    - text: "Welcome! I'm here to support you—ask away."
+
+  utter_ask_your_question:
+    - text: "Sure, what would you like to know?"
+    - text: "I'm listening—go ahead with your question."
+    - text: "Of course! What's on your mind?"
+    - text: "Absolutely. Feel free to ask anything."
+    - text: "Let me know how I can assist you today."
+
+  utter_goodbye:
+    - text: "Goodbye! Have a great day."
+    - text: "See you next time. Take care!"
+    - text: "Bye for now! Stay safe."
+    - text: "Thanks for chatting with me. Bye!"
+    - text: "Hope I was helpful! Goodbye 😊"
+
+  utter_prompt_feedback:
+    - text: "Go ahead, please share your feedback."
+    - text: "I'd love to hear your thoughts—feel free to type them below."
+    - text: "Please let me know how I did!"
+    - text: "What would you like to share about your experience?"
+    - text: "Your feedback helps me improve—what’s on your mind?"
+
+  utter_faq/ship_internationally:
+    - text: "Yes, we do ship internationally! Shipping fees and times may vary based on your location."
+    - text: "We ship worldwide—costs and delivery times depend on where you are."
+    - text: "Absolutely, international shipping is available."
+    - text: "Yes, we offer international delivery. Location-based charges may apply."
+    - text: "You can receive your order internationally. Just check the shipping details at checkout."
+
+  utter_faq/return_policy:
+    - text: "You can return a product within 30 days of purchase. Please ensure the item is unused and in its original packaging."
+    - text: "Our return window is 30 days—item must be unused and in its original box."
+    - text: "Need to return something? You have 30 days, just keep it in original condition."
+    - text: "Returns are allowed within 30 days. Make sure it’s unused and still packaged."
+    - text: "You may return any item within 30 days if it's in perfect condition."
+
+  utter_faq/delivery_time:
+    - text: "Delivery usually takes between 3–5 business days. You’ll receive a tracking number once your order is dispatched."
+    - text: "We deliver within 3–5 working days. Track your order once it ships!"
+    - text: "Expect your order within 3 to 5 business days."
+    - text: "Your package should arrive in 3–5 days. We'll share a tracking number shortly."
+    - text: "Deliveries take 3–5 days. We’ll notify you once it’s on the way."
+
+  utter_faq/how_to_order:
+    - text: |
+        🛒 *To place an order*, browse our products, add items to your cart, and proceed to checkout.
+        
+        You can also order directly through this chat! Here's how:
+        
+        1️⃣ *Ask for a product*  
+        Say: 'do you have phone charging cables in stock?' or 'I want to buy a phone'
+        
+        2️⃣ *Add items to your cart*  
+        Say: 'Add iPhone 14 to my cart' or 'I want 2 HP laptops in my cart'
+        
+        3️⃣ *Check your cart*  
+        Say: 'What's in my cart?'
+        
+        4️⃣ *Place the order*  
+        Say: 'Place my order'
+    - text: |
+        You can shop right here! 🛍️
+        
+        🧾 Ask for a product  
+        🛒 Add it to your cart  
+        📦 Place your order
+        
+        You can ask me to add products to you cart and check out.Let me know what you need!
+    - text: |
+        Here's how to order:
+        
+        ✅ Find a product  
+        ➕ Add it to your cart  
+        🧾 Review your cart  
+        🛍 Place the order
+        
+        Just chat with me to begin.
+    - text: |
+        Ordering is simple:
+        
+        1. Search or ask for a product  
+        2. Add it to your cart  
+        3. Say "place my order"
+        
+        I'm here to guide you through!
+    - text: |
+        🛒 You can order via this chat or our website.
+        
+        Just ask me for a product, add it to your cart, and confirm the order when you're ready!
+
+  utter_faq/payment_methods:
+    - text: "We accept credit/debit cards and bank transfers. All transactions are secure."
+    - text: "You can pay using cards or direct bank transfer—safely and securely."
+    - text: "We support Visa, Mastercard, and bank payments."
+    - text: "Our checkout accepts major cards and bank transfers."
+    - text: "We offer secure payment via credit/debit cards and bank accounts."
+
+  utter_faq/account_help:
+    - text: "You can create an account or log in using the 'Register' button at the top . Forgot your password? Click 'Forgot Password' to reset it."
+
+
+  utter_faq/contact_support:
+    - text: "You can contact our support team via live chat, email, or phone. Visit our Contact Us page for more info. Alternatively you can click on share your feedback and follow the prompts."
+    - text: "Reach out to support via chat, email, or phone—see our Contact Us page."
+    - text: "Need help? Contact our team anytime through live chat or email. we have feedback button"
+    - text: "Support is available 24/7. Chat, call, or email us through our support page."
+    - text: "Want assistance? You can message us here or visit the Contact Us section."
+
+  utter_faq/order_changes:
+    - text: "You can change or cancel your order within 1 hour of placing it. After that, we may have already started processing it."
+    - text: "You’ve got 1 hour to change/cancel your order before processing starts."
+    - text: "Need to modify your order? Do it within the first hour."
+    - text: "Once we begin processing (after 1 hour), changes may not be possible."
+    - text: "Edit or cancel your order within 60 minutes of placing it."
+
+  utter_faq/warranty_info:
+    - text: "Most products come with a standard 12-month warranty. Specific items may have longer coverage—check the product page for details."
+    - text: "Your purchase is protected with a 1-year warranty, unless stated otherwise."
+    - text: "We offer a 12-month warranty on most products."
+    - text: "Warranty terms vary by product—generally, it’s 12 months."
+    - text: "Look on the product page for warranty specifics—most are 1 year."
+
+  utter_iam_a_bot:
+    - text: "I'm a virtual assistant here to help you with your shopping needs."
+    - text: "I'm an AI bot designed to support your shopping journey!"
+    - text: "Just a friendly bot helping you shop smarter. 😊"
+    - text: "I'm here to assist you 24/7—no human, just helpful tech!"
+    - text: "I’m your digital assistant—ask me anything related to your order or shopping."
+
+  utter_happy:
+    - text: "That's great to hear! 😊"
+    - text: "Awesome! Glad I could help."
+    - text: "Yay! I'm happy you're happy!"
+    - text: "Fantastic news! Let me know if I can help with anything else."
+    - text: "That made my day too! 😄"
+
+  utter_cheer_up:
+    - text: "I'm sorry to hear that. I hope things get better soon. 💙"
+    - text: "That sounds tough. Sending positive vibes your way. 💫"
+    - text: "I'm here if you need to talk or need help with something else."
+    - text: "Wishing you brighter moments ahead!"
+    - text: "Keep your head up—I'm here to support you!"
+
+  utter_please_rephrase:
+    - text: "Okay, could you please rephrase your question?"
+    - text: "I didn’t quite get that. Can you try asking it differently?"
+    - text: "Hmm, I didn’t understand. Could you say it another way?"
+    - text: "Sorry, I missed that—can you ask again with different words?"
+    - text: "Could you clarify or reword that for me?"
+  utter_apologize:
+    - text: "I'm sorry that wasn't helpful. We can try again ."
+    - text: "Apologies! Let me try to assist you better."
+    - text: "I'm here to help—sorry if that didn’t answer your question."
+    - text: "Oops! Let me fix that or explain it better."
+    - text: "Sorry about that. Let's take another shot at it!"
+  utter_bot_feeling:
+    - text: "I'm just a bot, but I'm doing great! Thanks for asking. How can I help you today?"
+    - text: "Thanks for checking in! I'm always ready to assist you 😊"
+    - text: "As a bot, I don’t have feelings, but I’m here and fully functional!"
+    - text: "I’m feeling code-tastic today! Ready to help you."
+    - text: "I'm here, I'm listening, and I'm ready to assist you with anything you need."
+  utter_thank_you:
+    - text: "You're welcome!"
+    - text: "Happy to help 😊"
+    - text: "Anytime! Let me know if you need anything else."
+    - text: "Glad I could assist you!"
+    - text: "No problem at all. Just ask if you need more help."
+
+actions:
+  - action_session_start
+  - action_check_stock
+  - action_add_to_cart
+  - action_find_product_price
+  - action_find_cart_total
+  - action_add_order
+  - action_update_order
+  - action_delete_order
+  - action_check_order_status
+  - action_ask_feedback
+  - action_collect_feedback
+  - action_show_all_faqs
+  - action_default_fallback
+  - display_confidence_level
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

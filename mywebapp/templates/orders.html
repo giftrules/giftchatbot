@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %} Orders {% endblock %}
+
+{% block body %}
+
+<div class="container my-5">
+    <div class="row">
+        {% if orders %}
+        <h1 class="text-center mb-5" style="color: white;">Your Orders</h1>
+
+        {% for order in orders %}
+        <div class="col-12 mb-4">
+            <div class="cart-card shadow-sm">
+                <div class="card-body">
+                    <h4>Order #{{ order.order_id }}</h4>
+                    <p>Date: {{ order.order_date.strftime('%Y-%m-%d %H:%M') }}</p>
+                    <p>Status: <strong>{{ order.status }}</strong></p>
+                    <p>Total: <strong>USD {{ order.total_amount }}</strong></p>
+
+                    <!-- Collapse Button -->
+                    <button class="btn btn-outline-light btn-sm my-2" type="button" data-bs-toggle="collapse" data-bs-target="#itemsCollapse{{ loop.index }}" aria-expanded="false" aria-controls="itemsCollapse{{ loop.index }}">
+                        View Items
+                    </button>
+
+                    <!-- Collapsible Items Section -->
+                    <div class="collapse mt-3" id="itemsCollapse{{ loop.index }}">
+                        {% for item in order.order_items %}
+                        <div class="row mb-3">
+                            <div class="col-md-3 text-center align-self-center">
+                                <img src="{{ item.product.product_picture }}" alt="{{ item.product.product_name }}"
+                                     class="img-fluid img-thumbnail shadow-sm" height="150" width="150">
+                            </div>
+                            <div class="col-md-9">
+                                <h5>{{ item.product.product_name }}</h5>
+                                <p class="text-muted">Quantity: {{ item.quantity }}</p>
+                                <p class="text-muted">Price: USD {{ item.unit_price }}</p>
+                                <p class="text-muted">Subtotal: USD {{ item.unit_price * item.quantity }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Order Status Progress Bar -->
+                    {% if order.status == 'Pending' %}
+                    <div class="progress mb-2">
+                        <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    {% elif order.status == 'Accepted' %}
+                    <div class="progress mb-2">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    {% elif order.status == 'Out for delivery' %}
+                    <div class="progress mb-2">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    {% elif order.status == 'Delivered' %}
+                    <div class="progress mb-2">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    {% elif order.status == 'Canceled' %}
+                    <div class="progress mb-2">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% else %}
+        <h2 class="text-center text-white">You have no orders.</h2>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

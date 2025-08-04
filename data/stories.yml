@@ -1,0 +1,67 @@
+version: "3.1"
+
+stories:
+
+# Check stock
+- story: Check stock
+  steps:
+    - intent: check_stock
+    - action: action_check_stock
+
+# Add to cart
+- story: Add to cart
+  steps:
+    - intent: add_to_cart
+    - action: action_add_to_cart
+
+# Find product price
+- story: Find product price
+  steps:
+    - intent: find_product_price
+    - action: action_find_product_price
+
+
+# Find cart total
+- story: Find cart total
+  steps:
+    - intent: find_cart_total
+    - action: action_find_cart_total
+
+# Add order
+- story: Add order
+  steps:
+    - intent: add_order
+    - action: action_add_order
+
+# Update order
+- story: Update order
+  steps:
+    - intent: update_order
+    - action: action_update_order
+
+# Delete order
+- story: Delete order
+  steps:
+    - intent: delete_order
+    - action: action_delete_order
+
+# Check order status
+- story: Check order
+  steps:
+    - intent: check_order_status
+    - action: action_check_order_status
+
+
+- story: Say goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Share feedback
+  steps:
+  - intent: share_feedback
+  - action: utter_prompt_feedback
+  - action: feedback_form
+  - active_loop: feedback_form
+  - active_loop: null
+  - action: action_collect_feedback

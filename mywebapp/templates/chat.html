@@ -1,0 +1,347 @@
+{% extends 'base.html' %}
+
+{% block title %} Chatbot {% endblock %}
+
+{% block body %}
+<div class="container-fluid h-100" style="margin-top: 10px" xmlns="http://www.w3.org/1999/html">
+  <div class="row justify-content-center h-100">
+    <div class="col-md-10 col-xl-9 chat">
+      <div class="card">
+        <!-- Header -->
+        <div class="card-header msg_head">
+          <div class="d-flex bd-highlight">
+            <div class="img_cont">
+              <img src="../static/images/giftcatoon.png" class="rounded-circle user_img">
+              <span class="online_icon"></span>
+            </div>
+            <div class="user_info">
+              <span>Gift Chatbot</span>
+              <p>Ask me anything about our products!</p>
+              <p>
+                📄 <a href="/download/manual" download>Download Chatbot User Manual</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message Body -->
+        <div id="messageFormeight" class="card-body msg_card_body"></div>
+
+        <!-- Footer -->
+        <div class="card-footer">
+          <!-- FAQ Section -->
+
+          <div id="faq-section" class="faq_area" >
+            <h6 class="mb-1 text-white">❓ Frequently Asked Questions</h6>
+            <div id="faq-questions" style="display:none;">
+              <ul class="list-group" id="faq-question-list"></ul>
+            </div>
+
+           <div id="faq-categories" class="d-flex overflow-auto gap-2 flex-nowrap mb-1" style="white-space: nowrap; max-height: 40px;">
+              <!-- Emoji + Category buttons will appear here -->
+            </div>
+          </div>
+
+          <!-- Feedback and Chat Input -->
+          <div class="chat_area">
+            <div class="d-flex justify-content-center">
+              <button id="feedback-btn" class="btn btn-sm border-0 bg-transparent text-warning">📝 Share your Feedback</button>
+            </div>
+
+            <form id="messageArea" class="input-group mb-1">
+              <input type="text" id="text_1" class="type_msg" name="msg" value="The product I want to check for is " style="width: 200px;" readonly hidden/>
+              <input type="text" id="text" name="msg" placeholder="Type your message here…" autocomplete="off" class="form-control type_msg bright-placeholder" required />
+              <input type="hidden" id="user_id" name="user_id" value="{{ current_user.customer_id }}">
+              <input type="hidden" id="usertype" name="usertype" value="{{ current_user.usertype }}">
+
+              <div class="input-group-append">
+                <button type="submit" id="send" class="input-group-text send_btn" style="height: 60px">
+                  <i class="fas fa-location-arrow"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Script -->
+<script>
+  $(document).ready(function () {
+    const user_id = $("#user_id").val();
+    const usertype = $("#usertype").val();
+
+    // Fetch FAQ data on page load
+    $.ajax({
+      data: { msg: "Frequently asked questions", customer_id: user_id, usertype: usertype },
+      type: "POST",
+      url: "/thechat",
+    }).done(function (data) {
+      const grouped = groupFaqsByCategory(data);
+      console.log(grouped);
+      renderFaqCategories(grouped);
+    });
+
+    function groupFaqsByCategory(responseText) {
+      const groupedFaqs = {};
+      const entries = responseText.split('|').map(entry => entry.trim()).filter(entry => entry.includes('\n-'));
+
+      entries.forEach(entry => {
+        const [categoryPart, questionPart] = entry.split('\n-').map(str => str.trim());
+        const match = categoryPart.match(/^(.+?)\s?\*(.*?)\*/);
+
+        if (match && questionPart) {
+          const emoji = match[1].trim();
+          const category = match[2].trim();
+          const label = `${emoji} ${category}`;
+
+          if (!groupedFaqs[label]) {
+            groupedFaqs[label] = [];
+          }
+
+          groupedFaqs[label].push(questionPart);
+        } else {
+          console.warn("Could not parse entry:", entry);
+        }
+      });
+
+      return groupedFaqs;
+    }
+
+    function renderFaqCategories(groupedFaqs) {
+      const faqSection = document.getElementById('faq-section');
+      const categoryContainer = document.getElementById('faq-categories');
+      const questionContainer = document.getElementById('faq-questions');
+      const questionList = document.getElementById('faq-question-list');
+
+      categoryContainer.innerHTML = "";
+      questionList.innerHTML = "";
+      questionContainer.style.display = "none";
+
+      for (const [category, questions] of Object.entries(groupedFaqs)) {
+        const button = document.createElement('button');
+        button.className = 'btn btn-sm border-0 bg-transparent btn-sm m-1 faq-category-btn';
+        button.innerText = category;
+
+        button.onclick = () => {
+          questionList.innerHTML = "";
+          questions.forEach(question => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item list-group-item-action faq-category-btn';
+            li.innerText = question;
+
+            li.onclick = () => {
+              sendMessage(question);
+              questionContainer.style.display = 'none';
+            };
+
+            questionList.appendChild(li);
+          });
+          questionContainer.style.display = 'block';
+        };
+
+        categoryContainer.appendChild(button);
+      }
+
+      faqSection.style.display = 'block';
+    }
+
+    function sendMessage(text) {
+      $("#text").val(text);
+      $("form").submit();
+    }
+
+    $("#feedback-btn").click(function () {
+      $("#text").val("share feedback");
+      $("#send").click();
+    });
+
+    // Initial bot message
+    const now = new Date();
+    const initialStrTime = now.getHours() + ":" + now.getMinutes();
+    const typingHtmlInit = `
+      <div class="d-flex justify-content-start mb-4 typing-indicator" id="typing-indicator-init">
+        <div class="img_cont_msg">
+          <img src="../static/images/giftcatoon.png" class="rounded-circle user_img_msg">
+        </div>
+        <div class="msg_cotainer">
+          Typing
+          <span class="msg_time">${initialStrTime}</span>
+        </div>
+      </div>`;
+    $("#messageFormeight").append($.parseHTML(typingHtmlInit));
+
+    $.ajax({
+      data: { msg: "begin", customer_id: user_id, usertype: usertype },
+      type: "POST",
+      url: "/thechat",
+    }).done(function (data) {
+      $("#typing-indicator-init").remove();
+      const botHtml = `
+        <div class="d-flex justify-content-start mb-4">
+          <div class="img_cont_msg">
+            <img src="../static/images/giftcatoon.png" class="rounded-circle user_img_msg">
+          </div>
+          <div class="msg_cotainer">
+            ${data}
+            <span class="msg_time">${initialStrTime}</span>
+          </div>
+        </div>`;
+      $("#messageFormeight").append($.parseHTML(botHtml));
+      $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+    });
+
+    // On form submit
+    $("#messageArea").on("submit", function (event) {
+      event.preventDefault();
+
+      const now = new Date();
+      const str_time = now.getHours() + ":" + now.getMinutes();
+      var rawText = $("#text").val();
+
+      $("#text").prop("disabled", true);
+      $("#send").prop("disabled", true);
+      const input = document.getElementById('text_1');
+      $("#text").attr("placeholder","Type your message here...");
+
+      if(!input.hidden) {
+        input.hidden = true;
+        rawText=$("#text_1").val()+rawText;
+      }
+      const userHtml = `
+        <div class="d-flex justify-content-end mb-4">
+          <div class="msg_cotainer_send">${rawText}
+            <span class="msg_time_send">${str_time}</span>
+          </div>
+          <div class="img_cont_msg">
+            <img src="https://i.ibb.co/d5b84Xw/Untitled-design.png" class="rounded-circle user_img_msg">
+          </div>
+        </div>`;
+      $("#text").val("");
+      $("#messageFormeight").append(userHtml);
+
+      const typingHtml = `
+        <div class="d-flex justify-content-start mb-4 typing-indicator" id="typing-indicator">
+          <div class="img_cont_msg">
+            <img src="../static/images/giftcatoon.png" class="rounded-circle user_img_msg">
+          </div>
+          <div class="msg_cotainer">
+            Typing
+            <span class="msg_time">${str_time}</span>
+          </div>
+        </div>`;
+      $("#messageFormeight").append($.parseHTML(typingHtml));
+      $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+
+      $.ajax({
+          data: { msg: rawText, customer_id: user_id, usertype: usertype },
+          type: "POST",
+          url: "/thechat",
+        }).done(function (data) {
+          $("#typing-indicator").remove();
+
+          const messages = data.split("|");
+          const now = new Date();
+          const str_time = now.getHours() + ":" + now.getMinutes();
+          let wholemsg = "";
+
+          messages.forEach(response => {
+            const msg = response.replace(/\n/g, "<br>").replace("|", "<br>");
+            console.log(msg)
+            if (msg.includes("Which product")|| msg.includes("May I have the order ID to check its status")) {
+                if (msg.includes("price"))
+                  $("#text_1").val("what is the price of ");
+                else if (msg.includes("cart"))
+                  $("#text_1").val("I’d like to add ");
+                else if ("order ID to check its status")
+                   $("#text_1").val("please check the status of order number ");
+                else
+                   $("#text_1").val("check stock for ");
+
+                $("#text_1").prop("hidden", false); // shows the element (removes the hidden attribute)
+                $("#text").attr("placeholder", "Type the name of the product..."); // changes the
+            }
+            else
+                $("#text_1").prop("hidden", true);
+            // Check for suggestion message
+            if (msg.includes("Did you mean:")) {
+              const match = msg.match(/Did you mean:<br>➡️ '([^']+)'/);
+              if (match) {
+                const suggestedText = match[1];
+                const suggestionHtml = `
+                  <div class="d-flex justify-content-start mb-4">
+                    <div class="img_cont_msg">
+                      <img src="../static/images/giftcatoon.png" class="rounded-circle user_img_msg">
+                    </div>
+                    <div class="msg_cotainer">
+                      ${msg}
+                      <div class="mt-2">
+                        <button class="btn btn-sm btn-success me-2 btn-yes">Yes</button>
+                        <button class="btn btn-sm btn-danger btn-no">No</button>
+                      </div>
+                      <span class="msg_time">${str_time}</span>
+                    </div>
+                  </div>`;
+
+                $("#messageFormeight").append($.parseHTML(suggestionHtml));
+                $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+
+                $(".btn-yes").last().on("click", function () {
+                  sendMessage(suggestedText);
+                });
+
+                $(".btn-no").last().on("click", function () {
+                  const container = $(this).closest(".msg_cotainer");
+                  container.find(".btn-yes, .btn-no").remove();
+
+                  const retypeHtml = `
+                    <div class="d-flex justify-content-start mb-4">
+                      <div class="img_cont_msg">
+                        <img src="../static/images/giftcatoon.png" class="rounded-circle user_img_msg">
+                      </div>
+                      <div class="msg_cotainer">
+                        Please retype your message then.
+                        <span class="msg_time">${str_time}</span>
+                      </div>
+                    </div>`;
+                  $("#messageFormeight").append($.parseHTML(retypeHtml));
+                  $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+                });
+
+                return;
+              }
+            }
+
+            // Normal bot response
+            if (wholemsg.length > 0) {
+              wholemsg += "<br>" + msg;
+            } else {
+              wholemsg = msg;
+            }
+          });
+
+          if (wholemsg.length > 0) {
+            const botHtml = `
+              <div class="d-flex justify-content-start mb-4">
+                <div class="img_cont_msg">
+                  <img src="../static/images/giftcatoon.png" class="rounded-circle user_img_msg">
+                </div>
+                <div class="msg_cotainer">
+                  ${wholemsg}
+                  <span class="msg_time">${str_time}</span>
+                </div>
+              </div>`;
+            $("#messageFormeight").append($.parseHTML(botHtml));
+            $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+          }
+
+          $("#text").prop("disabled", false);
+          $("#send").prop("disabled", false);
+          $("#text").focus();
+        });
+    });
+  });
+</script>
+{% endblock %}

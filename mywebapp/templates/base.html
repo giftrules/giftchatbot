@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://kit.fontawesome.com/e24507d923.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" />
+
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <title>Gift Website | {% block title %} {% endblock %}</title>
+</head>
+<body>
+
+    <!-- navbar section -->
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #000; z-index: 1030;">
+      <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link text-secondary active" aria-current="page" href="/" style="font-family: cursive; font-size: 19px;">GiftWeb</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/" style="font-size: 17px;">Home</a>
+            </li>
+            {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/chatbox" style="font-size: 17px;">Chatbot</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link text-white" href="/contact" style="font-size: 17px;">Contact us</a>
+            </li>
+          </ul>
+
+
+        </div>
+
+        
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if current_user.is_authenticated %}
+            {% if current_user.usertype <2 %}
+                <li class="nav-item dropdown mx-2">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button", id="adminDropdown"
+                    data-bs-toggle="dropdown" aria-hidden="false">
+                      Admin
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="adminDropdown">
+
+                      <li><a class="dropdown-item" href="/customers">Customers<i class="fa-solid fa-user"></i></a></li>
+                      <li><a class="dropdown-item" href="/shop-items">Shop Items<i class="fa-solid fa-truck-fast"></i></a></li>
+                      <li><a class="dropdown-item" href="/add-shop-items">Add Products<i class="fa-solid fa-right-from-bracket"></i></a></li>
+                      <li><a class="dropdown-item" href="/view-orders">View Orders<i class="fa-solid fa-truck-fast"></i></a></li>
+
+
+                    </ul>
+
+                </li>
+            {% endif %}
+            {% else %}
+
+              <li><a class="nav-link text-white" href="/sign-up"><span class="badge bg-success"></span>Register</a></li>
+
+          {% endif %}
+
+          {% if current_user.is_authenticated %}
+          <li class="nav-item mx-2" id="items">
+            
+            {% if cart_items | length < 1 %}
+            <a class="nav-link text-white" href="/cart"><span class="badge bg-success"></span> Cart
+              <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            {% else %}
+            <a class="nav-link text-white" href="/cart"><span class="badge bg-success"></span> Cart
+              <i class="bi bi-{{ cart_items | length }}-square-fill"></i>
+            </a>
+            
+            {% endif %}
+            
+            
+          </li>
+          {% endif %}
+
+
+
+          
+          <li class="nav-item dropdown mx-2">
+            <a class="nav-link dropdown-toggle text-white" href="#" role="button", id="profileDropdown"
+            data-bs-toggle="dropdown" aria-hidden="false">
+              Account
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+
+            
+              {% if current_user.is_authenticated %}
+              <li><a class="dropdown-item" href="/profile/{{ current_user.customer_id }}">Profile <i class="fa-solid fa-user"></i></a></li>
+              <li><a class="dropdown-item" href="/orders">Orders <i class="fa-solid fa-truck-fast"></i></a></li>
+              <li><a class="dropdown-item" href="/logout">Log Out <i class="fa-solid fa-right-from-bracket"></i></a></li>
+
+              {% else %}
+              
+              <li><a class="dropdown-item" href="/login">Login <i class="fa-solid fa-right-to-bracket"></i></a></li>
+
+              {% endif %}
+
+            </ul>
+
+          </li>
+
+        </ul>
+
+
+
+      </div>
+    </nav>
+
+
+
+    {% for message in get_flashed_messages() %}
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 5px;">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    
+    </div>
+    {% endfor %}
+
+   <main style="flex: 1; margin-top: 50px;">
+    {% block body %}
+    {% endblock %}
+  </main>
+
+
+    <footer class="container-fluid text-center p-2 mt-5" style="background-color: orange; color: white;">
+    <a href="https://github.com/Frost-Codes" style="color: white;">Gift Lukhele</a> |
+    <span><i class="fa-sharp fa-regular fa-copyright"></i></span>
+    2025 All rights reserved
+  </footer>
+
+    <script src="{{ url_for( 'static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for( 'static', filename='js/all.min.js') }}"></script>
+    <script src="{{ url_for( 'static', filename='js/jquery.js') }}"></script>
+
+    <script src="{{ url_for( 'static', filename='js/myScript.js') }}"></script>
+
+
+
+</body>
+    
+
+
+
+
+
+
+    
+    
+</body>
+</html>

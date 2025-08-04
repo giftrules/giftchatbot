@@ -1,0 +1,86 @@
+version: "3.1"
+
+rules:
+
+# 1. Session start rule
+- rule: Start session
+  steps:
+    - intent: session_start
+    - action: action_session_start
+
+# 2. Greet user
+- rule: Greet the user
+  steps:
+    - intent: greet
+    - action: display_confidence_level
+    - action: utter_greet
+
+# 3. Respond to bot challenge
+- rule: Respond to I am a bot
+  steps:
+    - intent: bot_challenge
+    - action: display_confidence_level
+    - action: utter_iam_a_bot
+
+# 4. Mood great
+- rule: User feels great
+  steps:
+    - intent: mood_great
+    - action: display_confidence_level
+    - action: utter_happy
+
+# 5. Mood unhappy
+- rule: User feels unhappy
+  steps:
+    - intent: mood_unhappy
+    - action: display_confidence_level
+    - action: utter_cheer_up
+
+# 6. Show all FAQs
+- rule: Show all FAQs
+  steps:
+    - intent: view_faqs
+    - action: action_show_all_faqs
+
+# 7. FAQ Handling
+- rule: Respond to FAQ
+  steps:
+    - intent: faq
+    - action: display_confidence_level
+    - action: utter_faq
+
+# 8. Fallback for low confidence or ambiguous intent
+- rule: Fallback with intent suggestion
+  steps:
+    - intent: nlu_fallback
+    - action: action_default_fallback
+
+# 11. Generic fallback (unrecognized input)
+- rule: Default fallback
+  condition:
+    - active_loop: null
+  steps:
+    - action: action_default_fallback
+
+- rule: User wants to ask a question
+  steps:
+    - intent: ask_your_question
+    - action: display_confidence_level
+    - action: utter_ask_your_question
+- rule: Respond to thanks
+  steps:
+    - intent: thank_you
+    - action: display_confidence_level
+    - action: utter_thank_you
+
+- rule: Respond to "how are you?"
+  steps:
+    - intent: ask_how_bot_is
+    - action: display_confidence_level
+    - action: utter_bot_feeling
+
+- rule: Respond to unhappy user
+  steps:
+    - intent: unhappy_with_response
+    - action: display_confidence_level
+    - action: utter_apologize
