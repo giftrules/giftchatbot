@@ -1,1 +1,0 @@
-web: gunicorn chatbot_app:app --bind 0.0.0.0:1200
