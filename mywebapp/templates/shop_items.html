@@ -34,7 +34,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
             <td>{{ item.stock_quantity }}</td>
-            <td><img src="{{ item.product_picture }}" alt="" style="height: 50px; width: 50px; border-radius: 2px;"></td>
+            <td><img src="{{ url_for('get_image', filename=item.product_picture|replace('./media/', '') ) }}" alt="" style="height: 50px; width: 50px; border-radius: 2px;"></td>
 
 
             <td>

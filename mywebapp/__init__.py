@@ -36,8 +36,10 @@ def create_app():
     # Initialize the database (this will create the tables in the database)
     with app.app_context():
         create_database()
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
     return app
 
 def create_database():
     db.create_all()
     print('Database Created')
+    print('Good to go')

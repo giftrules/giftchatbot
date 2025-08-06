@@ -2,24 +2,25 @@ from flask import Blueprint, render_template, flash, redirect, request, jsonify
 from mywebapp.models import Cart, CartItem, Product,Order,OrderItem
 from flask_login import login_required, current_user
 from . import db
-
+from flask import send_from_directory
 views = Blueprint('views', __name__)
 
 
 @views.route('/')
-def home():
+@views.route('/page/<int:page>')
+def home(page=1):
+    per_page = 5 # or any number you prefer
+    print("Home route loaded!")
+    items = Product.query.paginate(page=page, per_page=per_page)
 
-    items = Product.query.all()
     cart_items = []
-    cart =[]
+    cart = []
     if current_user.is_authenticated:
         cart = Cart.query.filter_by(customer_id=current_user.customer_id).first()
         if cart:
             cart_items = CartItem.query.filter_by(cart_id=cart.cart_id).all()
 
     return render_template('home.html', items=items, cart=cart, cart_items=cart_items)
-
-
 @views.route('/contact')
 def contact():
 

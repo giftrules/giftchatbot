@@ -11,14 +11,13 @@
         <div class="card-header msg_head">
           <div class="d-flex bd-highlight">
             <div class="img_cont">
-              <img src="../static/images/giftcatoon.png" class="rounded-circle user_img">
-              <span class="online_icon"></span>
+             <img src="{{ url_for('static', filename='images/giftcatoon.png') }}" class="rounded-circle user_img"> <span class="online_icon"></span>
             </div>
             <div class="user_info">
               <span>Gift Chatbot</span>
               <p>Ask me anything about our products!</p>
               <p>
-                📄 <a href="/download/manual" download>Download Chatbot User Manual</a>
+                📄 <a href="{{ url_for('download_manual') }}" download>Download Chatbot User Manual</a>
               </p>
             </div>
           </div>

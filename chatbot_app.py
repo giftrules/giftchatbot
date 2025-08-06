@@ -1,21 +1,26 @@
-from flask import Flask, render_template, request, jsonify, flash
+import inspect
+import os
+
 import requests
-from mywebapp import create_app
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from  mywebapp.models import *
+from flask import abort, request, jsonify
 from flask import send_from_directory
-from sqlalchemy import func
+
+from mywebapp import create_app
+from mywebapp.models import *
+
 API_URL = 'http://localhost:5005/webhooks/rest/webhook'
 
 #API_URL='http://localhost:5055/webhook'
-
+# Get the absolute file path
+path_to_create_app = os.path.abspath(inspect.getfile(create_app))
+print(f"create_app() is defined in: {path_to_create_app}")
 app = create_app()
 #@app.route('/')
 #def index():
  #  return render_template('index.html')
-
+@app.route('/media/<path:filename>')
+def get_image(filename):
+    return send_from_directory('media', filename)
 @app.route('/webhook', methods=['POST'])
 def webhook():
     user_message = request.json['message']
@@ -117,11 +122,15 @@ def add_cart_item():
         return jsonify({'message': 'Internal server error'}), 500
 
 
-
 @app.route('/download/manual')
 def download_manual():
-    return send_from_directory('documents', 'Chatbot_User_Manual.docx', as_attachment=True)
+    directory = os.path.join(os.getcwd(), 'documents')
+    filename = 'Chatbot_User_Manual.docx'
 
+    if not os.path.isfile(os.path.join(directory, filename)):
+        abort(404)
+
+    return send_from_directory(directory=directory, path=filename, as_attachment=True)
 # ---------------------- Review Endpoint ----------------------
 @app.route('/chatbotreviews', methods=['POST'])
 def submit_review():
@@ -312,4 +321,5 @@ def save_contact_message():
     return jsonify({'message': 'Message saved successfully'}), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=1200, debug=True)
+
+    app.run(host='0.0.0.0', port=7860, debug=True)
