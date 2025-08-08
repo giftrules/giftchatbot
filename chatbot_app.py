@@ -122,6 +122,82 @@ def add_cart_item():
         return jsonify({'message': 'Internal server error'}), 500
 
 
+@app.route('/cart_items/remove', methods=['DELETE'])
+def remove_cart_item():
+    try:
+        data = request.get_json()
+        customer_id = data.get('customer_id')
+        product_name = data.get('product_name')
+        quantity = data.get('quantity')  # Optional; may be None or a string
+
+        if not customer_id or not product_name:
+            return jsonify({'message': 'Missing customer ID or product name'}), 400
+
+        cart = Cart.query.filter_by(customer_id=customer_id).first()
+        if not cart:
+            return jsonify({'message': 'Cart not found'}), 404
+
+        # Convert quantity to int if provided
+        if quantity is not None:
+            try:
+                quantity = int(quantity)
+                if quantity <= 0:
+                    return jsonify({'message': 'Quantity must be positive'}), 400
+            except ValueError:
+                return jsonify({'message': 'Quantity must be a number'}), 400
+
+        # Get matching categories
+        matching_categories = Category.query.filter(Category.name.ilike(f"%{product_name}%")).all()
+        category_ids = [c.category_id for c in matching_categories]
+
+        # Query products matching name or category
+        products_by_name = Product.query.filter(Product.name.ilike(f"%{product_name}%"))
+        products_by_category = Product.query.filter(Product.category_id.in_(category_ids)) if category_ids else Product.query.filter(False)  # empty
+
+        matching_products = products_by_name.union(products_by_category).all()
+
+        if not matching_products:
+            return jsonify({'message': f'No matching products or categories found for "{product_name}"'}), 404
+
+        removed_any = False
+        messages = []
+
+        for product in matching_products:
+            cart_item = CartItem.query.filter_by(cart_id=cart.cart_id, product_id=product.product_id).first()
+            if not cart_item:
+                continue
+
+            if quantity is None:
+                # Remove entire cart item
+                db.session.delete(cart_item)
+                messages.append(f"All {product.name} removed from cart")
+                removed_any = True
+            else:
+                if cart_item.quantity > quantity:
+                    cart_item.quantity -= quantity
+                    db.session.commit()
+                    messages.append(f"{quantity} {product.name} removed from cart")
+                    removed_any = True
+                else:
+                    db.session.delete(cart_item)
+                    messages.append(f"All {product.name} removed from cart")
+                    removed_any = True
+            db.session.commit()
+
+        # Delete cart if empty
+        if removed_any and CartItem.query.filter_by(cart_id=cart.cart_id).count() == 0:
+            db.session.delete(cart)
+            db.session.commit()
+            messages.append("Cart deleted (was last item).")
+
+        if removed_any:
+            return jsonify({'message': messages}), 200
+        else:
+            return jsonify({'message': 'No matching items found in your cart'}), 404
+
+    except Exception as e:
+        print(f"Error removing cart item(s): {e}")
+        return jsonify({'message': 'Internal server error'}), 500
 @app.route('/download/manual')
 def download_manual():
     directory = os.path.join(os.getcwd(), 'documents')

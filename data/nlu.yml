@@ -812,7 +812,99 @@ nlu:
     - I'd like to ask a question
     - Can I ask a question?
     - I need to ask a question
-
+- intent: remove_from_cart
+  examples: |
+    - Remove [1](quantity) [iPad Pro 11 case](product_name) from my cart
+    - Remove [2](quantity) [Apple iPhone 14 Pro](product_name)
+    - Remove [headphones](product_name) from the basket
+    - Remove [4](quantity) [ring light stand](product_name)
+    - Remove [1](quantity) [stylus](product_name) please
+    - Remove [6](quantity) [gaming monitor stand](product_name) from the cart
+    - Remove [five](quantity) [charging cable](product_name)
+    - Please remove [two](quantity) [desk mat](product_name)
+    - Take out [7](quantity) [Samsung Galaxy Tab](product_name) from my cart
+    - Remove [four](quantity) [portable power bank](product_name)
+    - Delete [3](quantity) [Samsung S21 phone](product_name)
+    - Get rid of [six](quantity) [Bluetooth speaker](product_name)
+    - Please delete [four](quantity) [iPhone charging cable](product_name)
+    - Take [two](quantity) [keyboard dust cover](product_name) out of the cart
+    - Remove [seven](quantity) [adjustable phone holder](product_name)
+    - Remove [nine](quantity) [external hard drive](product_name)
+    - Delete [six](quantity) [ultrawide monitor stand](product_name)
+    - Remove [1](quantity) [USB cable pack](product_name)
+    - Delete [ten](quantity) [webcam mount](product_name) from basket
+    - Remove [3](quantity) [laptop backpack case](product_name)
+    - Remove [three](quantity) [fitness tracker band](product_name)
+    - Take [four](quantity) [USB hub 3.0](product_name) out of my cart
+    - Remove [two](quantity) [camera lens kit](product_name)
+    - Delete [three](quantity) [gaming curved monitor](product_name)
+    - Remove [four](quantity) [gaming keyboard](product_name)
+    - Remove [wireless headphones](product_name)
+    - Remove all [green headphones](product_name) from my cart
+    - Remove all [white headphones](product_name) from cart
+    - delete all [laptops](product_name) from cart
+    - Take out [LED light bulb](product_name)
+    - Can you remove [gaming chair](product_name) from my cart?
+    - I want to remove [6](quantity) [magnetic charging dock](product_name)
+    - Please remove [one](quantity) [Oculus Quest 2](product_name)
+    - Kindly delete [three](quantity) [tablet stand](product_name)
+    - Kindly remove [two](quantity) [RGB gaming mousepad](product_name)
+    - Take [8](quantity) [laptop cooling pad](product_name) out
+    - Take off [podcast microphone](product_name) from my cart
+    - Help me remove [nine](quantity) [USB flash drive](product_name)
+    - Delete [4](quantity) [dual-band router](product_name)
+    - Take [smartwatch](product_name) out of the basket
+    - I'd like to remove [seven](quantity) [USB cable pack](product_name)
+    - Remove [nine](quantity) [USB extension cable](product_name)
+    - I’d like to delete [ten](quantity) [noise cancelling headphone set](product_name)
+    - I’d like to remove [VR headset](product_name)
+    - Take [gaming mouse](product_name) off the cart
+    - I don't want [one](quantity) [smart watch](product_name) anymore
+    - Exclude [6](quantity) [keyboard dust cover](product_name)
+    - Remove [4](quantity) [laptop sleeve bag](product_name)
+    - Please take out [eight](quantity) [tablet cover](product_name)
+    - Delete [HD webcam](product_name) from cart
+    - Kindly remove [Bluetooth speaker dock](product_name)
+    - Please take away [gaming mouse](product_name)
+    - Remove [USB-C external SSD drive](product_name) from my basket
+    - Remove [wireless gaming keyboard set](product_name)
+    - Delete [Bluetooth speaker dock](product_name)
+    - Delete [microphone](product_name)
+    - Delete [USB-C external SSD drive](product_name)
+    - Delete [wireless gaming keyboard set](product_name)
+    - Can you remove [safes](product_name) from my shopping cart?
+    - Can you take [external hardrive](product_name) out of my cart?
+- intent: clear_cart
+    - clear my cart
+    - empty the cart
+    - remove everything in my cart
+    - delete all items in my cart
+    - wipe my cart clean
+    - can you clear my shopping cart?
+    - throw away all items in my cart
+    - remove all products from the cart
+    - discard all from the cart
+    - get rid of everything in the cart
+    - I want to start fresh, empty the cart
+    - take out all items from my cart
+    - please clear all cart items
+    - I no longer want anything in the cart
+    - remove every item in my basket
+    - reset my shopping cart
+    - delete every single item from my cart
+    - remove all items I'm trying to buy
+    - I changed my mind, empty my cart
+    - can you remove all cart contents?
+    - clear cart now
+    - clean out my cart
+    - get everything out of my cart
+    - I want to delete the full cart
+    - discard entire cart
+    - delete shopping cart items
+    - please empty my basket
+    - I don’t want any of those items anymore, clear cart
+    - just wipe the whole cart
+    - flush my cart
 - lookup: product_name
   examples: |
     - 10000mah power bank

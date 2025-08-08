@@ -18,10 +18,17 @@ import requests
 import logging
 from rasa_sdk import Action
 from rasa_sdk.executor import CollectingDispatcher
+import json
 import os
 
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), "config.json")
 
-API_BASE_URL = "http://localhost:1200"  # Your Flask backend URL
+with open(CONFIG_PATH) as f:
+    config = json.load(f)
+
+API_BASE_URL = config["API_BASE_URL"]
+
+#API_BASE_URL = "http://localhost:1200"  # Your Flask backend URL
 DEFAULT_CUSTOMER_ID = 0  # fallback customer ID
 DEFAULT_USERTYPE = 2  # fallback usertype
 logger = logging.getLogger(__name__)
@@ -652,4 +659,102 @@ class ActionDefaultFallback(Action):
 
         # No close match at all
         dispatcher.utter_message(text="I'm sorry, I didn't quite understand. Could you rephrase that?")
+        return []
+        
+class ActionRemoveFromCart(Action):
+    def name(self) -> str:
+        return "action_remove_from_cart"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: dict):
+
+        logger.info("Starting action_remove_from_cart")
+        user_msg = tracker.latest_message.get("text")
+        intent = tracker.latest_message.get("intent", {}).get("name")
+        confidence = tracker.latest_message.get("intent", {}).get("confidence")
+        entities = tracker.latest_message.get("entities")
+
+        print(f"User Message: {user_msg}")
+        print(f"Matched Intent: {intent} | Confidence: {confidence}")
+        print(f"Entities: {entities}")
+
+        metadata = tracker.latest_message.get("metadata", {})
+        customer_id = metadata.get("customer_id", DEFAULT_CUSTOMER_ID)
+        usertype = metadata.get("usertype", None)
+
+        product_name = tracker.get_slot("product_name")
+        quantity = None
+
+        # Extract quantity from entity if available
+        for ent in entities:
+            if ent.get("entity") == "quantity":
+                try:
+                    quantity = int(ent.get("value"))
+                except:
+                    pass
+
+        if not product_name:
+            dispatcher.utter_message(text="I need the product name to remove it from your cart.")
+            return []
+
+        try:
+            # Prepare payload
+            payload = {
+                "customer_id": customer_id,
+                "product_name": product_name
+            }
+            if quantity:
+                payload["quantity"] = quantity
+
+            response = requests.delete(
+                f"{API_BASE_URL}/cart_items/remove",
+                json=payload
+            )
+
+            if response.status_code == 200:
+                msg = f"{product_name} has been removed from your cart."
+                if quantity:
+                    msg = f"{quantity} of {product_name} removed from your cart."
+                dispatcher.utter_message(text=msg)
+            elif response.status_code == 404:
+                dispatcher.utter_message(text="The item or cart was not found.")
+            else:
+                dispatcher.utter_message(text="Something went wrong while removing the item.")
+        except Exception as e:
+            dispatcher.utter_message(text="An error occurred while connecting to the server.")
+            logger.error(f"Exception in action_remove_from_cart: {e}")
+
+        return []
+        
+class ActionClearCart(Action):
+    def name(self) -> str:
+        return "action_clear_cart"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: dict):
+
+        logger.info("Starting clear_cart action")
+        intent = tracker.latest_message.get("intent", {}).get("name")
+        confidence = tracker.latest_message.get("intent", {}).get("confidence")
+        print(f"[Fallback Triggered] Intent detected: {intent}, confidence: {confidence}")
+        metadata = tracker.latest_message.get("metadata", {})
+        customer_id = int(metadata.get("customer_id", DEFAULT_CUSTOMER_ID))
+
+
+
+        try:
+            url = f"{API_BASE_URL}/products/cart_items/clear/{customer_id}"
+            response = requests.delete(url)
+
+            if response.status_code == 200:
+                dispatcher.utter_message(text="Your cart has been cleared.")
+            elif response.status_code == 404:
+                dispatcher.utter_message(text="You don't seem to have a cart yet.")
+            else:
+                dispatcher.utter_message(text="Sorry, something went wrong while clearing your cart.")
+        except Exception as e:
+            dispatcher.utter_message(text="An error occurred while connecting to the server.")
+
         return []

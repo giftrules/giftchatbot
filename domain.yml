@@ -11,6 +11,8 @@ intents:
   - mood_unhappy
   - bot_challenge
   - add_to_cart
+  - remove_from_cart
+  - clear_cart
   - check_stock
   - find_product_price
   - find_cart_total
@@ -279,6 +281,8 @@ actions:
   - action_add_order
   - action_update_order
   - action_delete_order
+  - action_clear_cart
+  - action_remove_from_cart
   - action_check_order_status
   - action_ask_feedback
   - action_collect_feedback

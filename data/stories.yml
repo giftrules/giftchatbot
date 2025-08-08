@@ -65,3 +65,13 @@ stories:
   - active_loop: feedback_form
   - active_loop: null
   - action: action_collect_feedback
+# clear cart
+- story: Clear from cart
+  steps:
+    - intent: clear_cart
+    - action: action_clear_cart
+# delete from cart
+- story: delete from cart
+  steps:
+    - intent: remove_from_cart
+    - action: action_remove_from_cart
